@@ -19,5 +19,6 @@ export interface Product {
   id: string;        // id único del producto en el catálogo
   name: string;      // nombre visible: "Pan integral"
   category: Category;
+  image?: string;
   // más adelante puedes agregar: brand, defaultUnit, notes, etc.
 }

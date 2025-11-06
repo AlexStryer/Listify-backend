@@ -11,11 +11,13 @@ const DB_PATH = path.join(DATA_DIR, "listify.db");
 
 const db = new Database(DB_PATH);
 
+// crea tablas
 db.exec(`
   CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    category TEXT NOT NULL
+    category TEXT NOT NULL,
+    image TEXT
   );
 
   CREATE TABLE IF NOT EXISTS shopping_lists (
@@ -34,5 +36,13 @@ db.exec(`
     FOREIGN KEY (product_id) REFERENCES products(id)
   );
 `);
+
+// 👇 por si ya existía la tabla sin la columna image
+// esto no rompe si la columna ya existe
+try {
+  db.exec(`ALTER TABLE products ADD COLUMN image TEXT;`);
+} catch (e) {
+  // probablemente ya existe, ignoramos
+}
 
 export default db;
